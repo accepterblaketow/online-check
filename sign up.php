@@ -57,9 +57,9 @@
                 <span>電 子 郵 件</span><br>
                 <input type="text" name="mail" class="a"><br><br>
                 <span>密 碼</span><br>
-                <input type="text" name="pwd" class="a"><br><br>
+                <input type="password" name="pwd" class="a"><br><br>
                 <span>確 認 密 碼</span><br>
-                <input type="text" name="repwd" class="a"><br><br>
+                <input type="password" name="repwd" class="a"><br><br>
                 <br><br>
                 <div style="text-align: center;">
                     <a onclick="location.href='login.php'" class="a"><u>會員登入</u></a><br>

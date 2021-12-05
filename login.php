@@ -25,8 +25,10 @@
         <title>DING 線上訂房系統</title>
         <style>
             body{
+                margin: 0; padding: 0;
                 font-weight:bold;
                 font-size:18px;
+                display: inline;
                
             }
             input.a{
@@ -50,20 +52,28 @@
                 background-color:transparent;
             }
             div.a{
+                position: absolute;     
+                border-radius: 20px;
+                background-color:#FFFFFF;
                 float:right;
-                margin:80px;
+                top:200px;
+                right:560px; 
+                padding:10px;
             }
         </style> 
     </head>
-    <body>    
+    <body bgcolor="#9393FF">    
+        <div style="background-color:#9F35FF;height:100px;  " ></div>
+        <img style="margin: 0 400px;"src="./img/log.png" width="650" height="500">
         <div class="a">
-        <h3>DING 線上訂房系統</h3>
-        <h3 style=>會 員 登 入</h3>
+        <img style="border-radius: 50%;" align="left" src="./img/logo.jpeg" width="30" height="30">
+        <span><h3 style="margin: 0 42px;">DING 線上訂房系統</h3></span>
+        <h3 >會 員 登 入</h3>
         <form action="" method="POST">
             <span>電 子 郵 件</span><br>
             <input type="text" name="mail" class="a"><br><br>
             <span>密 碼</span><br>
-            <input type="text" name="pwd" class="a"><br><br>
+            <input type="password" name="pwd" class="a"><br><br>
             <br><br>
             <div style="text-align: center;">
             <a onclick="location.href='sign up.php'" class="a"><u>會員註冊</u></a><br>
