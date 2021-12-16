@@ -1,19 +1,3 @@
-<?php
-    include 'conn.php';
-    if(isset($_POST['in'])){
-        $mail=$_POST['mail'];
-        $pwd=$_POST['pwd'];
-        $q="SELECT * FROM `guest` WHERE `email`='$mail' AND `pwd`='$pwd'";
-        if($row=mysqli_fetch_array(mysqli_query($db,$q))){
-            $_SESSION['user']=$row;
-            header('Location:homepage.html');
-        } 
-        else{
-            echo "帳號密碼錯誤";
-        }
-    }
-    
-?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -25,9 +9,11 @@
         <title>DING 線上訂房系統</title>
         <style>
             body{
+                margin: 0; 
+                padding: 0;
                 font-weight:bold;
                 font-size:18px;
-               
+                display: inline;
             }
             input.a{
                 border-style:none;
@@ -48,28 +34,59 @@
                 font-size:13pt;
                 color: #8E8E8E;
                 background-color:transparent;
+                text-decoration:none;
             }
             div.a{
+                position: absolute;     
+                border-radius: 20px;
+                background-color:#FFFFFF;
                 float:right;
-                margin:80px;
+                top:200px;
+                right:560px; 
+                padding:10px;
             }
         </style> 
     </head>
-    <body>    
+    <body bgcolor="#9393FF">
+    <?php
+    include 'conn.php';
+    if(isset($_POST['in'])){
+        $mail=$_POST['mail'];
+        $pwd=$_POST['pwd'];
+        $q="SELECT * FROM `user` WHERE `email`='$mail' AND `pwd`='$pwd'";
+        if($row=mysqli_fetch_array(mysqli_query($db,$q))){
+            $_SESSION['user']=$row;
+            header('Location:intro.html');
+        } 
+        else{
+            echo "帳號密碼錯誤";
+        }
+    }
+    
+    if(isset($_GET['c'])){
+        $c=$_GET['c'];
+        if($c==1)
+        echo "註冊成功";
+    }
+    
+?>    
+        <div style="background-color:#2828FF;height:70px;  " ></div>
+        <img style="margin: 0 400px;"src="./img/log.png" width="650" height="500">
         <div class="a">
-        <h3>DING 線上訂房系統</h3>
-        <h3 style=>會 員 登 入</h3>
+        <img style="border-radius: 50%;" align="left" src="./img/logo.jpeg" width="30" height="30">
+        <span><h3 style="margin: 0 42px;">DING 線上訂房系統</h3></span>
+        <h3 >會 員 登 入</h3>
         <form action="" method="POST">
             <span>電 子 郵 件</span><br>
             <input type="text" name="mail" class="a"><br><br>
             <span>密 碼</span><br>
-            <input type="text" name="pwd" class="a"><br><br>
+            <input type="password" name="pwd" class="a"><br><br>
             <br><br>
             <div style="text-align: center;">
             <a onclick="location.href='sign up.php'" class="a"><u>會員註冊</u></a><br>
             <input  class="b"  type="submit" name="in" value="SIGN IN">
             </div>
-        </form>
+        </form>        
         </div>
     </body>
     
