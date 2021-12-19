@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2021-12-16 22:27:39
+-- 產生時間： 2021-12-19 16:28:14
 -- 伺服器版本： 10.4.22-MariaDB
 -- PHP 版本： 7.3.33
 
@@ -50,6 +50,21 @@ INSERT INTO `eva` (`ev`) VALUES
 -- --------------------------------------------------------
 
 --
+-- 資料表結構 `room`
+--
+
+CREATE TABLE `room` (
+  `rname` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `des` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `p` int(50) NOT NULL,
+  `c` int(50) NOT NULL,
+  `img` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `id` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- 資料表結構 `user`
 --
 
@@ -74,6 +89,12 @@ INSERT INTO `user` (`id`, `name`, `email`, `pwd`) VALUES
 --
 
 --
+-- 資料表索引 `room`
+--
+ALTER TABLE `room`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- 資料表索引 `user`
 --
 ALTER TABLE `user`
@@ -82,6 +103,12 @@ ALTER TABLE `user`
 --
 -- 在傾印的資料表使用自動遞增(AUTO_INCREMENT)
 --
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `room`
+--
+ALTER TABLE `room`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `user`
