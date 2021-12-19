@@ -1,5 +1,5 @@
 <?php
-    include 'conn.php';
+    include '../conn.php';
     $row=$_SESSION['user'];
 ?>
 <!DOCTYPE html>
@@ -43,9 +43,9 @@
 
 <body bgcolor="#80FFFF">  
     <div id="t" style="background-color: #2828FF;display: block;height:70px;">
-        <span style="float:right;"><a onclick="location.href='login.php'">登出</a></span>
+        <span style="float:right;"><a onclick="location.href='../login.php'">登出</a></span>
             <ul id="t" style="font-size: 0;position: absolute;top:25px">
-                <li><a href="intro.html">房型介紹</a></li>
+                <li><a href="intro1.php">房型介紹</a></li>
                 <li><a href="res.php">預約訂房</a></li>
                 <li><a href="pinfo.php">會員資料</a></li>
                 <li><a href="q.php">預約查詢</a></li>

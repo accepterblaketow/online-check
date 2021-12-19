@@ -56,7 +56,11 @@
         $q="SELECT * FROM `user` WHERE `email`='$mail' AND `pwd`='$pwd'";
         if($row=mysqli_fetch_array(mysqli_query($db,$q))){
             $_SESSION['user']=$row;
-            header('Location:intro.html');
+            if($row['id']==1)
+                header('Location:master/dm.php');
+            else
+                header('Location:user/intro1.php');
+                
         } 
         else{
             echo "帳號密碼錯誤";

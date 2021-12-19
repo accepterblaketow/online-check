@@ -4,7 +4,7 @@
         $name=$_POST['name'];
         $mail=$_POST['mail'];
         $pwd=$_POST['pwd'];
-        $q="INSERT INTO user(`name`,`email`,`pwd`) values ('$name','$mail','$pwd')";
+        $q="INSERT INTO user(`name`,`email`,`pwd`) VALUES ('$name','$mail','$pwd')";
         mysqli_query($db,$q);  
         header('Location:login.php?c=1');
     }
