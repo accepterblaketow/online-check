@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+        <link rel="shortcut icon" href="../lo.ico">
         <title>DING 線上訂房系統</title>
         <style>
             body{
@@ -56,19 +56,15 @@
         $q="SELECT * FROM `user` WHERE `email`='$mail' AND `pwd`='$pwd'";
         if($row=mysqli_fetch_array(mysqli_query($db,$q))){
             $_SESSION['user']=$row;
-            header('Location:intro.html');
+            if($row['id']==1)
+                header('Location:master/dm.php');
+            else
+                header('Location:user/intro1.php');        
         } 
         else{
             echo "帳號密碼錯誤";
         }
     }
-    
-    if(isset($_GET['c'])){
-        $c=$_GET['c'];
-        if($c==1)
-        echo "註冊成功";
-    }
-    
 ?>    
         <div style="background-color:#2828FF;height:70px;  " ></div>
         <img style="margin: 0 400px;"src="./img/log.png" width="650" height="500">
