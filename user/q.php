@@ -29,6 +29,15 @@
             list-style: none;
             font-size: 18px;
         }
+        button.a{
+            height:40px;
+            width:90px;
+            background-color:#005AB5;
+            font-weight:bold;  
+            border-radius: 10px;
+            color: #E0E0E0;
+            font-size:18px;
+        }
         a:link{
             text-decoration: none;            
         }
