@@ -1,9 +1,15 @@
+<?php
+    include "../conn.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/popper.js/2.9.3/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.min.js"></script>
     <script src="../jquery-3.6.0.min.js"></script>
     <script src="../jquery-ui-1.13.0/jquery-ui.js"></script>
     <link href="../jquery-ui-1.13.0/jquery-ui.css" rel="stylesheet">
@@ -27,7 +33,7 @@
             text-decoration: none;            
         }
         a{
-            color: white;
+            color: #FFFFFF;
         }
         input.b{        
             background-color:#F0F0F0;
@@ -35,6 +41,13 @@
             font-size:18px;
             border-width:2px;
             border-color:#D0D0D0;
+        }  
+        button.a{
+            background-color:#005AB5;
+            border-radius: 10px;
+            color: #E0E0E0;
+            font-weight:bold;
+            font-size:18px;
         }  
         button.b{
             height:50px;
@@ -48,59 +61,71 @@
         span{
             color:#2828FF;
         }
+        table{      
+            border:3px #cccccc solid;
+            
+            margin-left:auto; 
+            margin-right:auto;
+        }
     </style>
-    <script>
-        $(function() {
-    $( "#dia" ).dialog({
-      autoOpen: false,
-    });
-    $( "#add" ).click(function() {
-      $( "#dia" ).dialog( "open" );
-    });
-  });
-        
+    <script>   
+        function edit(id){
+            $.post({
+                url:"up.php?s=2",
+                data:{
+                    rid:id,
+                },
+            });
+            location.href="edit.php";
+        }
+        function add(){
+            $.post({
+                url:"up.php?s=4",
+            });
+            location.href="addm.php";
+        }
+
     </script>
     </head>
 
 <body bgcolor="#80FFFF"> 
         <div id="t" style="background-color: #2828FF;display: block;height:70px;">
-            <span style="float:right;"><a onclick="location.href='../login.php'">登出</a></span>
+            <span style="float:right;"><button class="btn btn-outline-light text-dark" onclick="location.href='../logout.php'">登出</button></span>
             <ul id="t" style="font-size: 0;position: absolute;top:25px">
                 <li><a href="dm.php">訂單管理</a></li>
-                <li><a href="addm.php">新增房型</a></li>
-                <li><a href="rm.php">房型管理</a></li>
+                <li><a href="rm.php" style="color:#F6FF00">房型管理</a></li>
                 <li><a href="gm.php">財報圖表</a></li>
             </ul>            
-        </div>
-        <br>
-        <div style="padding:25px;">
-            <form action="" method="POST">
-                <span style="">房型名稱</span><br>
-                <input class="b" type="text" name="rm" style="width:400px;">
+        </div>          
+            <table  class="table" border="1">
+                <tr>
+                    <td>名稱</td>
+                    <td>圖片</td>
+                    <td>描述</td>
+                    <td>價格</td>
+                    <td>剩餘房數</td>
+                    <td>修改</td>
+                </tr>
+                <?php
+                    $q="SELECT * FROM room";
+                    $ans=mysqli_query($db,$q);
+                    while($row=mysqli_fetch_assoc($ans)){
+                            echo "<tr>";
+                            echo "<td>".$row['rname']."</td>";
+                            echo "<td><img src=".$row['img']." alt=尚未上傳圖片 width=300px height=240px></td>";
+                            echo "<td>".$row['des']."</td>";
+                            echo "<td>NT$".$row['p']."</td>";
+                            echo "<td>".$row['c']."</td>";
+                            echo "<td><button class=a onclick='edit(".$row['id'].")'>修改</button></td>";
+                            echo "</tr>";
+                    }                                
+                ?>
+            </table>
+            <br><br>
+            <div style="text-align:center;">
+                <button  onclick="add()" class="a" style="top:600px;left:480px;height:50px;width:270px;">新增房型</button>
+            </div>
 
-                <span style="position:absolute;left:650px;top:118px;">描述</span>
-                <input class="b" type="text" name="des" style="position:absolute;left:650px;width:500px;height:285px;"><br><br>
-                <span>房數</span><br>
-                <input class="b" type="text" name="c" style="width:55px"><br><br>
-                <span>價格</span><br>
-                <input class="b" type="text" name="mon" style="width:100px"><br><br>
-            </form>
-            <form action="up.php" method="POST" enctype="multipart/form-data">
-                <input class="b" type="file" name="file" id="file">
-                <img src=" 
-                    <?php
-                        if(isset($_SESSION["pic"])){
-                            echo $_SESSION["pic"];
-                        }
-                    ?>
-                " alt="預覽圖片"><br><br>
-                <input class="b" type="submit" name="pic" value="上傳圖片">
-            </form>
-        </div>
-        <br><br>
-        <div style="text-align:center;">
-            <button id="add" class="b">新增房型</button>
-        </div>
 
 </body>
 </html>

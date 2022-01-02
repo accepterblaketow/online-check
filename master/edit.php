@@ -62,13 +62,13 @@
         span{
             color:#2828FF;
         }
-    </style>
+    </style>        
     <script>
-        $(function(){
-            $( "#add" ).click(function(){
+        function ed(id){
                 $.post({
-                    url:"up.php?s=1",
+                    url:"up.php?s=3",
                     data:{
+                        roid:id,
                         rm:$("#rm").val(),
                         des:$("#des").val(),
                         c:$("#c").val(),
@@ -76,12 +76,11 @@
                         img:$("#pp").attr("src"),
                     },
                     success:function(msg){
-                        alert("新增成功");
+                        alert("修改成功");
                         location.href="rm.php";
                     },
                 });
-            });
-        });   
+            }
     </script>
     </head>
 
@@ -97,29 +96,27 @@
         </div>
         <br>
         <div style="padding:25px;">
-            <form action="up.php" method="POST" enctype="multipart/form-data">
-                <img src=
-                    <?php
-                        if(isset($_SESSION["pic"])){
-                            echo $_SESSION["pic"];
-                        }
-                    ?>
-                 alt="預覽圖片" width="240px" height="200px" id="pp"><br><br>
-                <input class="b" type="file" name="file" id="file">
-                <input class="b" type="submit" name="pic" value="上傳圖片">
-            </form>
-            <br>
-            <span style="">房型名稱</span><br>
-            <input class="b" type="text" id="rm" style="width:400px;" value="">
-            <span style="position:absolute;left:650px;top:118px;">描述</span>
-            <textarea type="text" id="des" style="position:absolute;left:650px;top:141px;width:500px;height:400px;"></textarea><br><br>
-            <span>房數</span><br>
-            <input class="b" type="text" id="c" style="width:55px"><br><br>
-            <span>價格</span><br>
-            <input class="b" type="text" id="mon" style="width:100px"><br><br>
-            <div style="text-align:center;">
-                <button  id="add" class="a" style="top:600px;left:480px;">新增房型</button>
-            </div>
+        <?php
+            $rid=$_SESSION['roomid'];
+            $q="SELECT * FROM room WHERE `id`='$rid'";
+            $row=mysqli_fetch_array(mysqli_query($db,$q));
+            echo "<form action=up.php method=POST enctype=multipart/form-data>";
+            echo "<img src=".$_SESSION["pic"]." alt=預覽圖片 width=240px height=200px id=pp><br><br>";
+            echo "<input class=b type=file name=file id=file>";
+            echo "<input class=b type=submit name=pic value=上傳圖片>";
+            echo "</form><br>";
+            echo "<span>房型名稱</span><br>";
+            echo "<input class=b type=text id=rm style=width:400px; value=".$row['rname'].">";
+            echo "<span style=position:absolute;left:650px;top:118px;>描述</span>";
+            echo "<textarea type=text id=des style=position:absolute;left:650px;top:141px;width:500px;height:400px;>".$row['des']."</textarea><br><br>";
+            echo "<span>房數</span><br>";
+            echo "<input class=b type=text id=c style=width:55px value=".$row['c']."><br><br>";
+            echo "<span>價格</span><br>";
+            echo "<input class=b type=text id=mon style=width:100px value=".$row['p']."><br><br>";
+            echo "<div style=text-align:center;>";
+            echo "<button  onclick=ed(".$rid.") class=a style=top:600px;left:480px;>修改房型</button>";
+            echo "</div>";
+        ?>
         </div>
         
 
