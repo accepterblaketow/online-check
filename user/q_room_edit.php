@@ -1,5 +1,21 @@
 <?php
     include "../conn.php";
+    if(isset($_POST['resid'])){
+        $resid=$_POST['resid'];
+        $q="SELECT * FROM `res` WHERE `id`='$resid'";
+        $row=mysqli_fetch_array(mysqli_query($db,$q));
+        $_SESSION['res']=$row;
+        $roomid=$_SESSION['res']['roomid'];
+        $q="SELECT * FROM `room` WHERE `id`='$roomid'";
+        $row=mysqli_fetch_array(mysqli_query($db,$q));
+        $_SESSION['p']=$row['p'];
+    }
+    $resid=$_SESSION['res']['id'];
+    $q="SELECT * FROM `res` WHERE `id`='$resid'";
+    $row=mysqli_fetch_array(mysqli_query($db,$q));
+    $_SESSION['res']=$row;
+    $roomid=$_SESSION['res']['roomid'];
+    $q="SELECT * FROM `room` WHERE `id`='$roomid'";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,58 +51,75 @@
         a{
             color: white;
         }
+        div.c{
+            margin:25px 0px;
+            padding:20px 0px;
+            background-color: #66B3FF;
+            color:#000093;
+        }
     </style>
     </head>
     <script>
-        function edit_room(id){
-            $.ajax({
-                type:"post",
-                url:"q_room_edit.php",
-                data:{
-                    resid:id,
-                },
-                success:function(){
-                    location.href="q_room_edit.php";
-                }
-            })
-        }
-        function edit_userinfo(id){
-
-        }
-        function dele_res(id){
-
-        }
-        function edit(id){
-            $.post({
-                    url:"set.php",
+        $(function(){
+            var to=new Date();
+            var str=to.getFullYear()+"-"+(to.getMonth()+1)+"-"+to.getDate();
+            $("#d1").attr("min",str);
+            $("#d2").attr("min",str);
+        });
+        function se(){
+            if($("#ss").val() !="請選擇房型"){
+                $.post({
+                    url:"rf.php",
                     data:{
-                        rsid:id,                
+                        rid:$("#ss").val(),                
                     },
                     dataType:"json",
                     success:function(msg){
-                        $("#id0").text("訂單編號");
-                        $("#na0").text("訂購人姓名");
-                        $("#ph0").text("訂購人電話");
-                        $("#p0").text("總計");
-                        $("#pay0").text("付款方式");
-                        $("#rname0").text("房型");
-                        $("#op0").text("意見/需求");
-                        $("#dd0").text("入住期間");     
-                        $("#im0").html("參考圖片");
-                        $("#ed0").html("編輯")
-                        $("#id").text(id);
-                        $("#na").text(msg.na);
-                        $("#ph").text(msg.ph);
-                        $("#p").text(msg.p);
-                        $("#pay").text(msg.pay);
-                        $("#rname").text(msg.rname);
-                        $("#op").text(msg.op);
+                        $("#ron").text(msg.rname);
+                        $("#de").text(msg.des);
                         $("#im").html("<img src="+ msg.img + " width=300px height=240px>");
-                        $("#dd").text(msg.d1+"~"+msg.d2);     
-                        $("#ed").html("<div class='btn-group'><button class='btn btn-primary' onclick=edit_room(" + id + ")>修改房型</button><button class='btn btn-primary' onclick=edit_userinfo(" + id + ")>修改個資</button><button class='btn btn-primary' onclick=dele_res(" + id + ")>取消訂房</button></div>")                                                                                           
+                        $("#pp").text("價格");
+                        $("#p").text(msg.p);
+                        $("#c").text("剩餘房數"+msg.c);
+                        $("#cc").attr("max",msg.c);
                     }
-                })
+                }) 
+            }                       
         }
+        function de(){
+            var mi=new Date($("#d1").val());
+            mi=mi.setDate(mi.getDate()+1);
+            mi=new Date(mi);
+            $("#d2").attr("min",mi.toLocaleDateString("fr-CA"));
+        }
+        function de1(){
+            var mi=new Date($("#d2").val());
+            mi=mi.setDate(mi.getDate()-1);
+            mi=new Date(mi);
+            $("#d1").attr("max",mi.toLocaleDateString("fr-CA"));
+        }
+        function q_room_edit(id){
+            var da1=new Date($("#d1").val());
+            var da2=new Date($("#d2").val());
+            var di = parseInt((da2-da1)/1000/60/60/24);
+            $.post({
+                url:"q_room_edit_action.php",
+                data:{
+                    resid:id,
+                    roomid:$("#ss").val(),
+                    d1:$("#d1").val(),
+                    d2:$("#d2").val(),                   
+                    op:$("#op").val(),
+                    c:$("#cc").val(),
+                    da:di,
+                    pay:$("#pay").val(),          
+                },
+                success:function(msg){
+                    location.href="q.php";
+                }
+            })
+        }
+        
     </script>
 <body> 
         <div id="t" style="background-color: #2828FF;display: block;height:70px;">
@@ -99,56 +132,49 @@
                 <li><a href="eva.php">客戶評價</a></li>
             </ul>            
         </div>
-        <table class="table table-hover">
-        <tr>
-            <td>姓名</td>
-            <td>入住日期</td>
-            <td>退房日期</td>
-            <td>總計</td>
-            <td>付款方式</td>
-            <td>檢視/取消</td>
-        </tr>
-        <?php
-            $uid=$_SESSION['user']['id'];
-            $q="SELECT * FROM res WHERE `uid`='$uid'";
-            $ans=mysqli_query($db,$q);
-            while($row=mysqli_fetch_assoc($ans)){
-                echo "<tr>";                       
-                echo "<td>".$row['na']."</td>";
-                echo "<td>".$row['d1']."</td>";
-                echo "<td>".$row['d2']."</td>";
-                echo "<td>".$row['p']."</td>";
-                echo "<td>".$row['pay']."</td>";
-                echo "<td><button type=button class='btn btn-primary' onclick='edit(".$row['id'].")'>檢視</button></td>";
-                echo "</tr>";
-            }
-        ?>
-        </table>
+        <div class="c" style="text-align:center; font-size: 25px;">
+            <span>修改房型</span>
+        </div>
         <div>
-        <table class="table table-borderless">
-        <tr>
-                <td id="id0"></td>
-                <td id="ph0"></td>
-                <td id="p0"></td>
-                <td id="pay0"></td>
-                <td id="rname0"></td>
-                <td id="im0"></td>
-                <td id="dd0"></td>
-                <td id="op0"></td>
-                <td id="ed0"></td>
-            </tr>
-            <tr>
-                <td id="id"></td>
-                <td id="ph"></td>
-                <td id="p"></td>
-                <td id="pay"></td>
-                <td id="rname"></td>
-                <td id="im"></td>
-                <td id="dd"></td>
-                <td id="op"></td>
-                <td id="ed"></td>
-            </tr>
-        </table>
+            <br>     
+            <sapn>房型選擇</span><br>
+            <select id="ss" onchange="se()" onclick="sev()">
+                <option value="請選擇房型">請選擇房型</option>
+                <?php
+                    $q="SELECT * FROM room WHERE `c` > 0";
+                    $ans=mysqli_query($db,$q);
+                    while($row=mysqli_fetch_assoc($ans)){
+                        if($row['id']==$_SESSION['res']['roomid'])
+                            echo "<option value=".$row['id']." selected>".$row['rname']." 剩餘房數 :".$row['c']." NT$ ".$row['p']."</option>";
+                        else
+                            echo "<option value=".$row['id'].">".$row['rname']." 剩餘房數 :".$row['c']." NT$ ".$row['p']."</option>";
+                    }
+                ?>
+            </select><br><br>                
+            <sapn>入住日期</span>
+            <input id="d1" type="date" id="d1" class="a" onchange="de()" value=<?php echo $_SESSION['res']['d1'];?>><br><br>
+            <sapn>退房日期</span>
+            <input type="date" id="d2" class="a" onchange="de1()" value=<?php echo $_SESSION['res']['d2'];?>><br><br>
+            <sapn>房間數量</span>
+            <input type="number" class="a" min="0" id="cc" value=<?php echo $_SESSION['res']['c'];?>><br><br>      
+        </div>
+        
+        <div style="float:right">
+            <span id="ron"></span><br>
+            <span id="im"></span><br>
+            <span id="de"></span><br>            
+            <span id="pp"></span><span id="p"></span><br>
+            <span id="c"></span><br>
+        </div>
+        <span>意見/需求</span><br>
+        <textarea type="text" id="op" style="width:300px;height:100px;"><?php echo $_SESSION['res']['op'];?></textarea><br>
+        <span>付款方式</span><br>
+        <select id="pay">
+            <option value="線上刷卡" <?php if ($_SESSION['res']['pay']=="線上刷卡") echo "selected";?>>線上刷卡</option>
+            <option value="付現" <?php if ($_SESSION['res']['pay']=="付現") echo "selected";?>>付現</option>
+        </select><br>
+        <div style="text-align:center;">
+                <button  id="add" class="btn btn-primary btn-lg" style="top:600px;left:480px;" onclick="q_room_edit(<?php echo $_SESSION['res']['id'];?>)">確認修改</button>
         </div>
 </body>
 </html>

@@ -58,7 +58,6 @@
             </ul>
     </div>
     <div class="c" style="text-align:center; font-size: 25px;">
-        <span>Personal Infomation</span><br><br>
         <span>個人資料維護</span>
     </div>
 <br>

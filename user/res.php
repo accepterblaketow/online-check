@@ -36,13 +36,6 @@
         a{
             color: white;
         }
-        input.a{
-                border-color:#D0D0D0;
-                height:20px;
-                font-size:10pt;
-                width:200px;
-                background-color:#E0E0E0;
-        }
         button.a{
             height:50px;
             width:270px;
@@ -55,7 +48,7 @@
         div.c{
             margin:25px 0px;
             padding:20px 0px;
-            background-color: #C4E1FF;
+            background-color: #66B3FF;
             color:#000093;
         }
     </style>
@@ -135,9 +128,8 @@
                 <li><a href="eva.php">客戶評價</a></li>
             </ul>            
         </div>
-        <br>
         <div class="c" style="text-align:center; font-size: 25px;">
-        <span>預約訂房</span>
+            <span>預約訂房</span>
         </div>
         <div>
             <br>     
@@ -153,11 +145,11 @@
                 ?>
             </select><br><br>                
             <sapn>入住日期</span>
-            <input id="d1" type="date" id="d1" class="a" onchange="de()"><br><br>
+            <input id="d1" type="date" id="d1"  onchange="de()"><br><br>
             <sapn>退房日期</span>
-            <input type="date" id="d2" class="a" onchange="de1()"><br><br>
+            <input type="date" id="d2"  onchange="de1()"><br><br>
             <sapn>房間數量</span>
-            <input type="number" class="a" min="0" id="cc"><br><br>      
+            <input type="number" min="0" id="cc"><br><br>      
         </div>
         
         <div style="float:right">

@@ -70,7 +70,6 @@
             </ul>            
         </div>
         <div class="c" style="text-align:center; font-size: 25px;">
-            <span>Customer Review</span><br><br>
             <span>客戶評價</span>
         </div>
         <br><br>

@@ -44,6 +44,12 @@
         a{
             color: white;
         }
+        div.c{
+            margin:25px 0px;
+            padding:20px 0px;
+            background-color: #66B3FF;
+            color:#000093;
+        }
     </style>
     </head>
     <script>
@@ -60,10 +66,28 @@
             })
         }
         function edit_userinfo(id){
-
+            $.ajax({
+                type:"post",
+                url:"q_userinfo_edit.php",
+                data:{
+                    resid:id,
+                },
+                success:function(){
+                    location.href="q_userinfo_edit.php";
+                }
+            })
         }
         function dele_res(id){
-
+            $.ajax({
+                type:"post",
+                url:"q_room_edit.php",
+                data:{
+                    resid:id,
+                },
+                success:function(){
+                    location.href="q_room_edit.php";
+                }
+            })
         }
         function edit(id){
             $.post({
@@ -107,6 +131,9 @@
                 <li><a href="q.php" style="color:#F6FF00">預約查詢</a></li>
                 <li><a href="eva.php">客戶評價</a></li>
             </ul>            
+        </div>
+        <div class="c" style="text-align:center; font-size: 25px;">
+            <span>預約查詢</span>
         </div>
         <table class="table table-hover">
         <tr>
