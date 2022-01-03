@@ -1,5 +1,21 @@
 <?php
     include "../conn.php";
+    if(isset($_POST['resid'])){
+        $resid=$_POST['resid'];
+        $q="SELECT * FROM `res` WHERE `id`='$resid'";
+        $row=mysqli_fetch_array(mysqli_query($db,$q));
+        $_SESSION['res']=$row;
+        $roomid=$_SESSION['res']['roomid'];
+        $q="SELECT * FROM `room` WHERE `id`='$roomid'";
+        $row=mysqli_fetch_array(mysqli_query($db,$q));
+        $_SESSION['p']=$row['p'];
+    }
+    $resid=$_SESSION['res']['id'];
+    $q="SELECT * FROM `res` WHERE `id`='$resid'";
+    $row=mysqli_fetch_array(mysqli_query($db,$q));
+    $_SESSION['res']=$row;
+    $roomid=$_SESSION['res']['roomid'];
+    $q="SELECT * FROM `room` WHERE `id`='$roomid'";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,13 +23,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../lo.ico">
     <script src="../jquery-3.6.0.min.js"></script>
     <script src="../jquery-ui-1.13.0/jquery-ui.js"></script>
     <link href="../jquery-ui-1.13.0/jquery-ui.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
-    <script src="https://cdn.staticfile.org/popper.js/2.9.3/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.min.js"></script>
-    <link rel="shortcut icon" href="../lo.ico">
     <title>線上訂房系統</title>
     <style>
         body{
@@ -36,15 +51,6 @@
         a{
             color: white;
         }
-        button.a{
-            height:50px;
-            width:270px;
-            background-color:#005AB5;
-            font-weight:bold;  
-            border-radius: 10px;
-            color: #E0E0E0;
-            font-size:18px;
-        }
         div.c{
             margin:25px 0px;
             padding:20px 0px;
@@ -52,6 +58,7 @@
             color:#000093;
         }
     </style>
+    </head>
     <script>
         $(function(){
             var to=new Date();
@@ -91,45 +98,42 @@
             mi=new Date(mi);
             $("#d1").attr("max",mi.toLocaleDateString("fr-CA"));
         }
-        function addq(){
+        function q_room_edit(id){
             var da1=new Date($("#d1").val());
             var da2=new Date($("#d2").val());
             var di = parseInt((da2-da1)/1000/60/60/24);
             $.post({
-                url:"fill user info.php",
+                url:"q_room_edit_action.php",
                 data:{
-                    rid:$("#ss").val(),
-                    rm:$("#ron").text(),
-                    p:$("#p").text(),
+                    resid:id,
+                    roomid:$("#ss").val(),
                     d1:$("#d1").val(),
                     d2:$("#d2").val(),                   
                     op:$("#op").val(),
-                    cc:$("#cc").val(),
-                    cc1:di,
-                    pay:$("#pay").val(),
-                    op:$("#op").val(),            
+                    c:$("#cc").val(),
+                    da:di,
+                    pay:$("#pay").val(),          
                 },
                 success:function(msg){
-                    location.href="fill user info.php";
+                    location.href="q.php";
                 }
             })
         }
+        
     </script>
-    </head>
-
-<body bgcolor="#80FFFF"> 
+<body> 
         <div id="t" style="background-color: #2828FF;display: block;height:70px;">
             <span style="float:right;"><button class="btn btn-outline-light text-dark" onclick="location.href='../logout.php'">登出</button></span>
             <ul id="t" style="font-size: 0;position: absolute;top:25px">
                 <li><a href="intro1.php">房型介紹</a></li>
-                <li><a href="res.php" style="color:#F6FF00">預約訂房</a></li>
+                <li><a href="res.php">預約訂房</a></li>
                 <li><a href="pinfo.php">會員資料</a></li>
-                <li><a href="q.php">預約查詢</a></li>
+                <li><a href="q.php" style="color:#F6FF00">預約查詢</a></li>
                 <li><a href="eva.php">客戶評價</a></li>
             </ul>            
         </div>
         <div class="c" style="text-align:center; font-size: 25px;">
-            <span>預約訂房</span>
+            <span>修改房型</span>
         </div>
         <div>
             <br>     
@@ -140,16 +144,19 @@
                     $q="SELECT * FROM room WHERE `c` > 0";
                     $ans=mysqli_query($db,$q);
                     while($row=mysqli_fetch_assoc($ans)){
-                        echo "<option value=".$row['id'].">".$row['rname']." 剩餘房數 :".$row['c']." NT$ ".$row['p']."</option>";
+                        if($row['id']==$_SESSION['res']['roomid'])
+                            echo "<option value=".$row['id']." selected>".$row['rname']." 剩餘房數 :".$row['c']." NT$ ".$row['p']."</option>";
+                        else
+                            echo "<option value=".$row['id'].">".$row['rname']." 剩餘房數 :".$row['c']." NT$ ".$row['p']."</option>";
                     }
                 ?>
             </select><br><br>                
             <sapn>入住日期</span>
-            <input id="d1" type="date" id="d1"  onchange="de()"><br><br>
+            <input id="d1" type="date" id="d1" class="a" onchange="de()" value=<?php echo $_SESSION['res']['d1'];?>><br><br>
             <sapn>退房日期</span>
-            <input type="date" id="d2"  onchange="de1()"><br><br>
+            <input type="date" id="d2" class="a" onchange="de1()" value=<?php echo $_SESSION['res']['d2'];?>><br><br>
             <sapn>房間數量</span>
-            <input type="number" min="0" id="cc"><br><br>      
+            <input type="number" class="a" min="0" id="cc" value=<?php echo $_SESSION['res']['c'];?>><br><br>      
         </div>
         
         <div style="float:right">
@@ -160,15 +167,14 @@
             <span id="c"></span><br>
         </div>
         <span>意見/需求</span><br>
-        <textarea type="text" id="op" style="width:300px;height:100px;"></textarea><br>
+        <textarea type="text" id="op" style="width:300px;height:100px;"><?php echo $_SESSION['res']['op'];?></textarea><br>
         <span>付款方式</span><br>
         <select id="pay">
-            <option value="線上刷卡">線上刷卡</option>
-            <option value="付現">付現</option>
+            <option value="線上刷卡" <?php if ($_SESSION['res']['pay']=="線上刷卡") echo "selected";?>>線上刷卡</option>
+            <option value="付現" <?php if ($_SESSION['res']['pay']=="付現") echo "selected";?>>付現</option>
         </select><br>
         <div style="text-align:center;">
-                <button  id="add" class="btn btn-primary btn-lg" style="top:600px;left:480px;" onclick="addq()">確認訂單</button>
+                <button  id="add" class="btn btn-primary btn-lg" style="top:600px;left:480px;" onclick="q_room_edit(<?php echo $_SESSION['res']['id'];?>)">確認修改</button>
         </div>
-
 </body>
 </html>

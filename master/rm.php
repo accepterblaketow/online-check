@@ -7,6 +7,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/popper.js/2.9.3/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.min.js"></script>
     <script src="../jquery-3.6.0.min.js"></script>
     <script src="../jquery-ui-1.13.0/jquery-ui.js"></script>
     <link href="../jquery-ui-1.13.0/jquery-ui.css" rel="stylesheet">
@@ -30,7 +33,7 @@
             text-decoration: none;            
         }
         a{
-            color: white;
+            color: #FFFFFF;
         }
         input.b{        
             background-color:#F0F0F0;
@@ -87,14 +90,14 @@
 
 <body bgcolor="#80FFFF"> 
         <div id="t" style="background-color: #2828FF;display: block;height:70px;">
-            <span style="float:right;"><a onclick="location.href='../logout.php'">登出</a></span>
+            <span style="float:right;"><button class="btn btn-outline-light text-dark" onclick="location.href='../logout.php'">登出</button></span>
             <ul id="t" style="font-size: 0;position: absolute;top:25px">
                 <li><a href="dm.php">訂單管理</a></li>
-                <li><a href="rm.php">房型管理</a></li>
+                <li><a href="rm.php" style="color:#F6FF00">房型管理</a></li>
                 <li><a href="gm.php">財報圖表</a></li>
             </ul>            
         </div>          
-            <table cellpadding="10" border='1'>
+            <table  class="table" border="1">
                 <tr>
                     <td>名稱</td>
                     <td>圖片</td>

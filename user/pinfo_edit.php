@@ -45,6 +45,32 @@
         }
     </style>
     </head>
+    <script>
+        function pinfo_edit(){
+            if($("#na").val()=="" || $("#email").val()==""){
+                alert("*項不可為空");
+            }
+            else{
+                $.ajax({
+                    type:'post',
+                    url:'pinfo_edit_action.php',
+                    data:{
+                        name:$("#na").val(),
+                        sex:$("#sex").val(),
+                        email:$("#email").val(),
+                        iid:$("#iid").val(),
+                        ph:$("#ph").val(),
+                        lo:$("#lo").val(),
+                    },
+                    success:function(msg){
+                        alert("修改成功");
+                        location.href="pinfo.php";
+                    }
+                });
+            }
+        }
+        
+    </script>
 
 <body bgcolor="#80FFFF">  
     <div id="t" style="background-color: #2828FF;display: block;height:70px;">
@@ -58,31 +84,32 @@
             </ul>
     </div>
     <div class="c" style="text-align:center; font-size: 25px;">
+        <span>Personal Infomation</span><br><br>
         <span>個人資料維護</span>
     </div>
 <br>
-<span style="position:absolute;left:10px;">名稱</span>
-<span style="position:absolute;left:930px;"><?php echo $row['name'];?></span>
-<br><br><br>    
-<span style="position:absolute;left:10px;">電子郵件</span>
-<span style="position:absolute;left:930px;"><?php echo $row['email'];?></span>
-<br><br><br>
-<span style="position:absolute;left:10px;">性別</span>
-<span style="position:absolute;left:930px;"><?php echo $row['sex'];?></span>
-<br><br><br>
-<span style="position:absolute;left:10px;">電話</span>
-<span style="position:absolute;left:930px;"><?php echo $row['ph'];?></span>
-<br><br><br>
-<span style="position:absolute;left:10px;">身分證字號</span>
-<span style="position:absolute;left:930px;"><?php echo $row['iid'];?></span>
-<br><br><br>
-<span style="position:absolute;left:10px;">聯絡地址</span>
-<span style="position:absolute;left:930px;"><?php echo $row['lo'];?></span>
-</div>
-<br><br><br>
-<div style="text-align:center;">
-    <button class="btn btn-primary" style="font-weight:bold;" onclick="location.href='pinfo_edit.php'">修改個人資料</button>
-</div>
+<?php
+            echo "<div style=text-align:left;margin-left:700px>";
+            echo "<form action='' method=POST>";
+            echo "<span>名稱*</span><br>";
+            echo "<input class=b type=text id=na style=width:100px; value=".$row['name']."><br><br>";
+            echo "<span>性別</span><br>";
+            echo "<select id=sex>";
+            echo "<option value=男>男</option>";
+            echo "<option value=女>女</option>";
+            echo "</select><br><br>";
+            echo "<span>電子郵件*</span><br>";
+            echo "<input type=text id=email style=width:300px; value=".$row['email']."><br><br>";
+            echo "<span>身分證字號</span><br>";
+            echo "<input class=b type=text id=iid style=width:200px value=".$row['iid']."><br><br>";
+            echo "<span>電話</span><br>";
+            echo "<input class=b type=text id=ph style=width:180px value=".$row['ph']."><br><br>";
+            echo "<span>聯絡地址</span><br>";
+            echo "<input class=b type=text id=lo style=width:400px value=".$row['lo']."><br><br>";
+            echo "<button class='btn btn-info' onclick=pinfo_edit() name=pinfo>確認送出</button>";
+            echo "</form><br>";
+            echo "</div>";
+?>
 
 </body>
 </html>
