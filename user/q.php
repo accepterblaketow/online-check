@@ -78,20 +78,23 @@
             })
         }
         function dele_res(id){
-            $.ajax({
+            if (confirm("確定取消?")){
+                $.ajax({
                 type:"post",
-                url:"q_room_edit.php",
+                url:"q_dele_action.php",
                 data:{
                     resid:id,
                 },
                 success:function(){
-                    location.href="q_room_edit.php";
+                    alert("取消成功");
+                    location.reload();
                 }
             })
+            } 
         }
         function edit(id){
             $.post({
-                    url:"set.php",
+                    url:"q_findres.php",
                     data:{
                         rsid:id,                
                     },
@@ -100,6 +103,7 @@
                         $("#id0").text("訂單編號");
                         $("#na0").text("訂購人姓名");
                         $("#ph0").text("訂購人電話");
+                        $("#c0").text("房數")
                         $("#p0").text("總計");
                         $("#pay0").text("付款方式");
                         $("#rname0").text("房型");
@@ -110,6 +114,7 @@
                         $("#id").text(id);
                         $("#na").text(msg.na);
                         $("#ph").text(msg.ph);
+                        $("#c").text(msg.c);
                         $("#p").text(msg.p);
                         $("#pay").text(msg.pay);
                         $("#rname").text(msg.rname);
@@ -123,11 +128,13 @@
     </script>
 <body> 
         <div id="t" style="background-color: #2828FF;display: block;height:70px;">
+            <img src='../aaa.ico' width="70px" height="70px">
             <span style="float:right;"><button class="btn btn-outline-light text-dark" onclick="location.href='../logout.php'">登出</button></span>
-            <ul id="t" style="font-size: 0;position: absolute;top:25px">
-                <li><a href="intro1.php">房型介紹</a></li>
+            <ul id="t" style="font-size: 0;position: absolute;top:25px;left:2%;">
+                <li><a href="intro_room.php">房型介紹</a></li>
+                <li><a href="intro_fa.php">設施介紹</a></li>
                 <li><a href="res.php">預約訂房</a></li>
-                <li><a href="pinfo.php">會員資料</a></li>
+                <li><a href="pinfo.php" >會員資料</a></li>
                 <li><a href="q.php" style="color:#F6FF00">預約查詢</a></li>
                 <li><a href="eva.php">客戶評價</a></li>
             </ul>            
@@ -165,6 +172,7 @@
         <tr>
                 <td id="id0"></td>
                 <td id="ph0"></td>
+                <td id="c0"></td>
                 <td id="p0"></td>
                 <td id="pay0"></td>
                 <td id="rname0"></td>
@@ -176,6 +184,7 @@
             <tr>
                 <td id="id"></td>
                 <td id="ph"></td>
+                <td id="c"></td>
                 <td id="p"></td>
                 <td id="pay"></td>
                 <td id="rname"></td>

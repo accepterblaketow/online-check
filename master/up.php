@@ -3,18 +3,18 @@
         $s=$_GET["s"];
         if($_FILES["file"]["error"] > 0){
             if($_SESSION['sta']=="add")
-                header('Location:addm.php');
+                header('Location:rm_add.php');
             else
-                header('Location:edit.php');
+                header('Location:rm_edit.php');
         }
         else{
             $t=date("YmdHis");
             move_uploaded_file($_FILES["file"]["tmp_name"],"../upload/".$t);
             $_SESSION["pic"]="../upload/".$t;
             if($_SESSION['sta']=="add")
-                header('Location:addm.php');
+                header('Location:rm_add.php');
             else
-                header('Location:edit.php');
+                header('Location:rm_edit.php');
         }    
         if($s==1){
             $rm=$_POST['rm'];

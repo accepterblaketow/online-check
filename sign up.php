@@ -1,15 +1,3 @@
-<?php
-    include 'conn.php';
-    if(isset($_POST['up'])){
-        $name=$_POST['name'];
-        $mail=$_POST['mail'];
-        $pwd=$_POST['pwd'];
-        $q="INSERT INTO user(`name`,`email`,`pwd`) VALUES ('$name','$mail','$pwd')";
-        mysqli_query($db,$q);  
-        header('Location:login.php?c=1');
-    }
-    
-?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -35,7 +23,7 @@
                 width:300px;
                 background-color:#E0E0E0;
             }
-            input.b{
+            button.b{
                 height:50px;
                 width:270px;
                 background-color:#005AB5;
@@ -58,7 +46,32 @@
                 padding:10px;
             }
         </style> 
-    </head>    
+    </head>
+    <script>
+        function sign_up(){
+            if($("#pwd").val()==$("#repwd").val()){
+                $.post({
+                    url:"sign up_action.php",
+                    data:{
+                        name:$("#name").val(),
+                        mail:$("#mail").val(),
+                        pwd:$("#pwd").val(),      
+                    },
+                    success:function(msg){
+                        if(msg!="此信箱已被註冊"){
+                            alert(msg);
+                            location.href="index.php";
+                        }
+                        alert(msg);
+                    }
+                })
+            }
+            else{
+                alert("密碼不一致");
+            }    
+           
+    }
+    </script>
     <body bgcolor="#9393FF">   
             <div style="background-color: #2828FF;display: block;height:70px;"></div>
             <img style="margin: 0 400px;"src="./img/log.png" width="650" height="500"> 
@@ -66,22 +79,20 @@
             <img style="border-radius: 50%;" align="left" src="./img/logo.jpeg" width="30" height="30">    
             <h3 style="margin: 0 42px;">DING 線上訂房系統</h3>
             <h3>會 員 註 冊</h3>
-            <form action="" method="POST">
                 <span>姓名</span><br>
-                <input type="text" name="name" class="a"><br><br>
+                <input type="text" id="name" class="a"><br><br>
                 <span>電 子 郵 件</span><br>
-                <input type="text" name="mail" class="a"><br><br>
+                <input type="text" id="mail" class="a"><br><br>
                 <span>密 碼</span><br>
-                <input type="password" name="pwd" class="a"><br><br>
+                <input type="password" id="pwd" class="a"><br><br>
                 <span>確 認 密 碼</span><br>
-                <input type="password" name="repwd" class="a"><br><br>
+                <input type="password" id="repwd" class="a"><br><br>
                 <br><br>
                 <div style="text-align: center;">
-                    <a onclick="location.href='login.php'" class="a"><u>會員登入</u></a><br>
-                <input class="b" type="submit" name="up" value="SIGN UP">
+                    <a onclick="location.href='index.php'" class="a"><u>會員登入</u></a><br>
+                    <button class="b" type="submit" onclick="sign_up()">SIGN UP</button>
                 </div>
-            </form>
-        </div>
+            </div>
     </body>
     
 </html>

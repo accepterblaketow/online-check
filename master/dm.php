@@ -40,13 +40,13 @@
             font-size:18px;
         }
         input.a{
-                font-weight:bold;
-                height:30px;
-                font-size:13pt;
-                width:300px;
-                border-radius: 10px;
-                background-color:#E0E0E0;
-            }
+            height:35px;
+            font-size:13pt; 
+            outline-color:#66B3FF;
+            border-radius:10px;
+            border-width:1px;
+            font-weight:bold;
+        }
         input.b{
                 font-weight:bold;
                 font-size:18px;
@@ -69,7 +69,7 @@
     <script>
         function dele(id){
             $.post({
-                url:"dele_d.php",
+                url:"dm_dele.php",
                 data:{
                     resid:id,
                 },
@@ -84,17 +84,19 @@
 <body bgcolor="#80FFFF"> 
         <div id="t" style="background-color: #2828FF;display: block;height:70px;">
             <span style="float:right;"><button class="btn btn-outline-light text-dark" onclick="location.href='../logout.php'">登出</button></span>
-            <ul id="t" style="font-size: 0;position: absolute;top:25px">
+            <img src='../aaa.ico' width="70px" height="70px">
+            <ul id="t" style="font-size: 0;position: absolute;top:25px;left:2%;">
                 <li><a href="dm.php" style="color:#F6FF00">訂單管理</a></li>
                 <li><a href="rm.php">房型管理</a></li>
                 <li><a href="gm.php">財報圖表</a></li>
             </ul>            
         </div>
+        <br>
         <div>
-            <from action="" method="POST">
+            <form action="" method="POST">
                 <input class="a" name="search_id" type="text" placeholder="以編號搜尋">
                 <input class="btn btn-info" name="sear" type=submit value="搜尋">
-            </from>
+            </form>
         </div>
         <br>
         <table class="table">
@@ -112,7 +114,7 @@
             <td>退房</td>
         </tr>
         <?php
-            if(isset($_POST['sear'])){
+            if(isset($_POST['sear']) && $_POST['search_id']!=""){
                 $resid=$_POST['search_id'];
                 $q="SELECT * FROM res WHERE `id`='$resid'";
                 $ans=mysqli_query($db,$q);               
@@ -133,7 +135,7 @@
             echo "<td>".$row['pay']."</td>";
             echo "<td>".$row['ph']."</td>";
             echo "<td>".$row['op']."</td>";
-            echo "<td><button class=btn btn-primary onclick='dele(".$row['id'].")'>退房</button></td>";
+            echo "<td><button class='btn btn-primary' onclick='dele(".$row['id'].")'>退房</button></td>";
             echo "</tr>";
         }
 

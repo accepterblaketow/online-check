@@ -7,13 +7,14 @@
     $sum=array();
     $c=mysqli_num_rows($ans);
     $i=0;
+    $total=0;
     while($row=mysqli_fetch_assoc($ans)){
         array_push($room,$row['rname']);
         $roomid=$row['id'];
         $q="SELECT SUM(`p`) FROM `log` WHERE `roomid`='$roomid'";
         $s=mysqli_fetch_array(mysqli_query($db,$q));
         array_push($sum,$s[0]);
-        
+        $total=$total+$s[0];
     }
 
 ?>
@@ -138,12 +139,17 @@
 <body bgcolor="#80FFFF"> 
         <div id="t" style="background-color: #2828FF;display: block;height:70px;">
             <span style="float:right;"><button class="btn btn-outline-light text-dark" onclick="location.href='../logout.php'">登出</button></span>
-            <ul id="t" style="font-size: 0;position: absolute;top:25px">
+            <link rel="shortcut icon" href="../lo.ico">
+            <img src='../aaa.ico' width="70px" height="70px">
+            <ul id="t" style="font-size: 0;position: absolute;top:25px;left:2%;">
                 <li><a href="dm.php">訂單管理</a></li>
                 <li><a href="rm.php">房型管理</a></li>
                 <li><a href="gm.php" style="color:#F6FF00">財報圖表</a></li>
-            </ul>            
-        </div>
+            </ul>                     
+        </div>        
         <div id="chart" style="width: 600px; height: 500px; margin: 50px auto"></div>
+        <div style="text-align:center;">
+            <h1>總收入為:<?php echo $total?>NT$</h1>
+        </div>
 </body>
 </html>

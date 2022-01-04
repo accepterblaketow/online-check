@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2022-01-02 12:21:27
+-- 產生時間： 2022-01-04 08:20:25
 -- 伺服器版本： 10.4.22-MariaDB
 -- PHP 版本： 7.3.33
 
@@ -28,24 +28,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `eva` (
-  `ev` varchar(200) COLLATE utf8_unicode_ci NOT NULL
+  `ev` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `uid` int(100) NOT NULL,
+  `score` int(10) NOT NULL,
+  `id` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- 傾印資料表的資料 `eva`
---
-
-INSERT INTO `eva` (`ev`) VALUES
-('aaa'),
-('aaa'),
-('aaa'),
-('aaa'),
-('aaa'),
-('aaa'),
-('aaa'),
-('aaa'),
-('aaa'),
-('aaa');
 
 -- --------------------------------------------------------
 
@@ -67,10 +54,10 @@ CREATE TABLE `log` (
 --
 
 INSERT INTO `log` (`id`, `roomid`, `uid`, `p`, `d1`, `d2`) VALUES
-(4, 26, 2, 3200, '2022-01-05', '2022-01-07'),
-(5, 26, 2, 12800, '2022-01-14', '2022-01-22'),
-(6, 27, 2, 4000, '2022-01-06', '2022-01-08'),
-(7, 28, 2, 12000, '2022-01-13', '2022-01-19');
+(18, 26, 2, 3200, '2022-01-06', '2022-01-08'),
+(19, 26, 2, 3200, '2022-01-05', '2022-01-07'),
+(20, 28, 2, 8000, '2022-01-08', '2022-01-12'),
+(21, 27, 2, 4000, '2022-01-06', '2022-01-08');
 
 -- --------------------------------------------------------
 
@@ -97,14 +84,6 @@ CREATE TABLE `res` (
   `em` varchar(100) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- 傾印資料表的資料 `res`
---
-
-INSERT INTO `res` (`id`, `roomid`, `d1`, `d2`, `na`, `ph`, `lo`, `sex`, `iid`, `p`, `pay`, `da`, `uid`, `op`, `c`, `em`) VALUES
-(7, 26, '2022-01-05', '2022-01-08', 'www', 'awdaw', 'awd', '男', 'awd', 4800, '線上刷卡', 3, 2, '444444444444444444444444444444444', 2, 'awd'),
-(8, 29, '2022-01-13', '2022-01-22', 'asdas', 'asd', 'asd', '男', 'asdasd', 270000, '線上刷卡', 9, 2, 'asdasdas', 3, 'asd');
-
 -- --------------------------------------------------------
 
 --
@@ -125,9 +104,9 @@ CREATE TABLE `room` (
 --
 
 INSERT INTO `room` (`rname`, `des`, `p`, `c`, `img`, `id`) VALUES
-('雅致雙人房', 'asdasdasdasd', 800, 5, '../upload/20211231173714', 26),
-('雅致雙床房', 'qqqqqqqqqwdqwdqwdqwdwdqwdwd', 1000, 14, '../upload/20220101095059', 27),
-('豪華單床房', '一張舒適的床，是旅人的渴望，愜意氛圍，放鬆身心靈。', 1000, 2, '../upload/20220101095405', 28),
+('雅致雙人房', '簡潔俐落的空間風格，溫暖的大地色系室內裝潢，落地窗外寬廣的視野景觀。', 800, 10, '../upload/20211231173714', 26),
+('雅致雙床房', '雅潔典雅的裝潢風格，寬敞設計擁有充足活動空間，觀景落地窗的設計。', 1000, 10, '../upload/20220101095059', 27),
+('豪華單床房', '一張舒適的床，是旅人的渴望，愜意氛圍，放鬆身心靈。', 1000, 10, '../upload/20220101095405', 28),
 ('豪華雙床房', '加大的空間體驗，加倍的幸福感受。', 10000, 10, '../upload/20220101095533', 29);
 
 -- --------------------------------------------------------
@@ -160,6 +139,12 @@ INSERT INTO `user` (`id`, `name`, `email`, `pwd`, `iid`, `ph`, `lo`, `sex`) VALU
 --
 
 --
+-- 資料表索引 `eva`
+--
+ALTER TABLE `eva`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- 資料表索引 `log`
 --
 ALTER TABLE `log`
@@ -188,16 +173,22 @@ ALTER TABLE `user`
 --
 
 --
+-- 使用資料表自動遞增(AUTO_INCREMENT) `eva`
+--
+ALTER TABLE `eva`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- 使用資料表自動遞增(AUTO_INCREMENT) `log`
 --
 ALTER TABLE `log`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `res`
 --
 ALTER TABLE `res`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `room`
@@ -209,7 +200,7 @@ ALTER TABLE `room`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

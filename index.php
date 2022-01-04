@@ -59,7 +59,7 @@
             if($row['id']==1)
                 header('Location:master/dm.php');
             else
-                header('Location:user/intro1.php');        
+                header('Location:user/intro_room.php');        
         } 
         else{
             echo "帳號密碼錯誤";

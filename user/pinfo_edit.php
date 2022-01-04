@@ -40,8 +40,22 @@
         div.c{
             margin:25px 0px;
             padding:20px 0px;
-            background-color: #C4E1FF;
+            background-color: #66B3FF;
             color:#000093;
+        }
+        input.b{
+            height:35px;
+            font-size:13pt; 
+            outline-color:#66B3FF;
+            border-radius:10px;
+            border-width:1px;
+            font-weight:bold;
+        }
+        select{
+            font-weight:bold;
+        }
+        select option{
+            font-weight:bold;
         }
     </style>
     </head>
@@ -73,18 +87,19 @@
     </script>
 
 <body bgcolor="#80FFFF">  
-    <div id="t" style="background-color: #2828FF;display: block;height:70px;">
-        <span style="float:right;"><a onclick="location.href='../logout.php'">登出</a></span>
-            <ul id="t" style="font-size: 0;position: absolute;top:25px">
-                <li><a href="intro1.php">房型介紹</a></li>
+        <div id="t" style="background-color: #2828FF;display: block;height:70px;">
+            <img src='../aaa.ico' width="70px" height="70px">
+            <span style="float:right;"><button class="btn btn-outline-light text-dark" onclick="location.href='../logout.php'">登出</button></span>
+            <ul id="t" style="font-size: 0;position: absolute;top:25px;left:2%;">
+                <li><a href="intro_room.php">房型介紹</a></li>
+                <li><a href="intro_fa.php">設施介紹</a></li>
                 <li><a href="res.php">預約訂房</a></li>
                 <li><a href="pinfo.php" style="color:#F6FF00">會員資料</a></li>
                 <li><a href="q.php">預約查詢</a></li>
                 <li><a href="eva.php">客戶評價</a></li>
-            </ul>
-    </div>
+            </ul>            
+        </div>
     <div class="c" style="text-align:center; font-size: 25px;">
-        <span>Personal Infomation</span><br><br>
         <span>個人資料維護</span>
     </div>
 <br>
@@ -99,7 +114,7 @@
             echo "<option value=女>女</option>";
             echo "</select><br><br>";
             echo "<span>電子郵件*</span><br>";
-            echo "<input type=text id=email style=width:300px; value=".$row['email']."><br><br>";
+            echo "<input class=b type=text id=email style=width:300px; value=".$row['email']."><br><br>";
             echo "<span>身分證字號</span><br>";
             echo "<input class=b type=text id=iid style=width:200px value=".$row['iid']."><br><br>";
             echo "<span>電話</span><br>";

@@ -1,6 +1,5 @@
 <?php
-    include '../conn.php';
-    $row=$_SESSION['user'];
+    include "../conn.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,53 +44,43 @@
         }
     </style>
     </head>
-<body bgcolor="#80FFFF">  
+
+<body bgcolor="#80FFFF"> 
         <div id="t" style="background-color: #2828FF;display: block;height:70px;">
             <img src='../aaa.ico' width="70px" height="70px">
             <span style="float:right;"><button class="btn btn-outline-light text-dark" onclick="location.href='../logout.php'">登出</button></span>
             <ul id="t" style="font-size: 0;position: absolute;top:25px;left:2%;">
-                <li><a href="intro_room.php">房型介紹</a></li>
+                <li><a href="intro_room.php" style="color:#F6FF00">房型介紹</a></li>
                 <li><a href="intro_fa.php">設施介紹</a></li>
                 <li><a href="res.php">預約訂房</a></li>
-                <li><a href="pinfo.php" style="color:#F6FF00">會員資料</a></li>
+                <li><a href="pinfo.php">會員資料</a></li>
                 <li><a href="q.php">預約查詢</a></li>
                 <li><a href="eva.php">客戶評價</a></li>
             </ul>            
         </div>
-    <div class="c" style="text-align:center; font-size: 25px;">
-        <span>個人資料維護</span>
-    </div>
-<br>
-<div style="padding-left:30%;">
-    <div style="float:right;padding-right:40%;">
-        <span ><?php echo $row['name'];?></span>
-        <br><br><br>    
-        <span ><?php echo $row['email'];?></span>
-        <br><br><br>
-        <span><?php echo $row['sex'];?></span>
-        <br><br><br>
-        <span><?php echo $row['ph'];?></span>
-        <br><br><br>
-        <span><?php echo $row['iid'];?></span>
-        <br><br><br>
-        <span><?php echo $row['lo'];?></span>
-    </div>
-    <span>名稱</span>
-    <br><br><br>    
-    <span>電子郵件</span>
-    <br><br><br>
-    <span>性別</span>
-    <br><br><br>
-    <span>電話</span>
-    <br><br><br>
-    <span>身分證字號</span>
-    <br><br><br>
-    <span>聯絡地址</span>
-    </div>
-<br><br><br>
-<div style="text-align:center;">
-    <button class="btn btn-primary" style="font-weight:bold;" onclick="location.href='pinfo_edit.php'">修改個人資料</button>
-</div>
+        <div class="c" style="text-align:center; font-size: 25px;">
+            <span>房型一覽</span>
+        </div>
+        <table class="table-responsive" style="text-align:left;">
+        <?php 
+            $q="SELECT * FROM room";
+            $ans=mysqli_query($db,$q);
+            while($row=mysqli_fetch_assoc($ans)){
+                echo "<table class='table-responsive' style='margin-left:auto;margin-right:auto;'>";
+                echo "<tr>";
+                echo "<td><h3><span>".$row['rname']."</span></h3></td>";
+                echo "</tr>";
+                echo "<tr>";
+                echo "<td><img src=".$row['img']." width=600px height=360px></td>";
+                echo "</tr>";
+                echo "<tr>";
+                echo "<td><span>".$row['des']."</span><br><span><h3>NT$".$row['p']."</h3></span></td>";
+                echo "</tr>";
+                echo "</table>";
+                echo "<br>";
+            }
+        ?>
+        
 
 </body>
 </html>

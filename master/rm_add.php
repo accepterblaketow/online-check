@@ -1,6 +1,6 @@
 <?php
     include "../conn.php";
-?>
+?> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,23 +33,18 @@
             text-decoration: none;            
         }
         a{
-            color: #FFFFFF;
+            color: white;
         }
-        input.b{        
-            background-color:#F0F0F0;
+        input.b{
+            height:35px;
+            font-size:13pt; 
+            outline-color:#66B3FF;
+            border-radius:10px;
+            border-width:1px;
             font-weight:bold;
-            font-size:18px;
-            border-width:2px;
-            border-color:#D0D0D0;
         }  
         button.a{
-            background-color:#005AB5;
-            border-radius: 10px;
-            color: #E0E0E0;
-            font-weight:bold;
-            font-size:18px;
-        }  
-        button.b{
+            
             height:50px;
             width:270px;
             background-color:#005AB5;
@@ -60,12 +55,6 @@
         }  
         span{
             color:#2828FF;
-        }
-        table{      
-            border:3px #cccccc solid;
-            
-            margin-left:auto; 
-            margin-right:auto;
         }
         textarea{
             outline-color:#66B3FF;
@@ -79,27 +68,30 @@
             font-weight:bold;
         }
     </style>
-    <script>   
-        function edit(id){
-            $.post({
-                url:"up.php?s=2",
-                data:{
-                    rid:id,
-                },
+    <script>
+        $(function(){
+            $( "#add" ).click(function(){
+                $.post({
+                    url:"up.php?s=1",
+                    data:{
+                        rm:$("#rm").val(),
+                        des:$("#des").val(),
+                        c:$("#c").val(),
+                        mon:$("#mon").val(),
+                        img:$("#pp").attr("src"),
+                    },
+                    success:function(msg){
+                        alert("新增成功");
+                        location.href="rm.php";
+                    },
+                });
             });
-            location.href="rm_edit.php";
-        }
-        function add(){
-            $.post({
-                url:"up.php?s=4",
-            });
-            location.href="rm_add.php";
-        }
-
+        });   
     </script>
     </head>
 
 <body bgcolor="#80FFFF"> 
+      
         <div id="t" style="background-color: #2828FF;display: block;height:70px;">
             <span style="float:right;"><button class="btn btn-outline-light text-dark" onclick="location.href='../logout.php'">登出</button></span>
             <img src='../aaa.ico' width="70px" height="70px">
@@ -108,36 +100,37 @@
                 <li><a href="rm.php" style="color:#F6FF00">房型管理</a></li>
                 <li><a href="gm.php">財報圖表</a></li>
             </ul>            
-        </div>          
-            <table  class="table" border="1">
-                <tr>
-                    <td>名稱</td>
-                    <td>圖片</td>
-                    <td>描述</td>
-                    <td>價格</td>
-                    <td>剩餘房數</td>
-                    <td>修改</td>
-                </tr>
-                <?php
-                    $q="SELECT * FROM room";
-                    $ans=mysqli_query($db,$q);
-                    while($row=mysqli_fetch_assoc($ans)){
-                            echo "<tr>";
-                            echo "<td>".$row['rname']."</td>";
-                            echo "<td><img src=".$row['img']." alt=尚未上傳圖片 width=300px height=240px></td>";
-                            echo "<td>".$row['des']."</td>";
-                            echo "<td>NT$".$row['p']."</td>";
-                            echo "<td>".$row['c']."</td>";
-                            echo "<td><button class='btn btn-primary' onclick='edit(".$row['id'].")'>修改</button></td>";
-                            echo "</tr>";
-                    }                                
-                ?>
-            </table>
-            <br><br>
-            <div style="text-align:center;">
-                <button  onclick="add()" class='btn btn-primary' style="top:600px;left:480px;height:50px;width:270px;">新增房型</button>
-            </div>
-
+        </div>
+        <br>
+        <div style=position:absolute;left:20%;top:20%;>
+            <form action="up.php" method="POST" enctype="multipart/form-data">
+                <img src=
+                    <?php
+                        if(isset($_SESSION["pic"])){
+                            echo $_SESSION["pic"];
+                        }
+                    ?>
+                 alt="預覽圖片" width="240px" height="200px" id="pp"><br><br>
+                <input class="b" type="file" name="file" id="file">
+                <input class="b" type="submit" name="pic" value="上傳圖片">
+            </form>
+            <br>
+            <span style="">房型名稱</span><br>
+            <input class="b" type="text" id="rm" style="width:400px;" value=""><br><br>
+            
+            <span>房數</span><br>
+            <input class="b" type="text" id="c" style="width:55px"><br><br>
+            <span>價格</span><br>
+            <input class="b" type="text" id="mon" style="width:100px"><br><br>
+        </div>
+        <div style=position:absolute;right:25%;top:20%;>
+            <span>描述</span><br>
+            <textarea type="text" id="des" style="width:500px;height:400px;"></textarea><br><br>
+        </div>
+        <div style="text-align:center;position:absolute;top:80%;left:45%;">
+            <button  id="add" class="btn btn-primary btn-lg">新增房型</button>
+        </div>
+        
 
 </body>
 </html>

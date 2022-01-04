@@ -45,11 +45,30 @@
             color: #E0E0E0;
             font-size:18px;
         }
+        input.a{
+            height:35px;
+            font-size:13pt; 
+            outline-color:#66B3FF;
+            border-radius:10px;
+            border-width:1px;
+            font-weight:bold;
+        }
+        textarea{
+            outline-color:#66B3FF;
+            font-weight:bold;
+        }
         div.c{
             margin:25px 0px;
             padding:20px 0px;
             background-color: #66B3FF;
             color:#000093;
+        }
+        select{
+            font-weight:bold;
+            
+        }
+        select option{
+            font-weight:bold;
         }
     </style>
     <script>
@@ -62,7 +81,7 @@
         function se(){
             if($("#ss").val() !="請選擇房型"){
                 $.post({
-                    url:"rf.php",
+                    url:"room_find.php",
                     data:{
                         rid:$("#ss").val(),                
                     },
@@ -71,9 +90,9 @@
                         $("#ron").text(msg.rname);
                         $("#de").text(msg.des);
                         $("#im").html("<img src="+ msg.img + " width=300px height=240px>");
-                        $("#pp").text("價格");
+                        $("#pp").text("價格 NT$");
                         $("#p").text(msg.p);
-                        $("#c").text("剩餘房數"+msg.c);
+                        $("#c").text("剩餘房數 "+msg.c);
                         $("#cc").attr("max",msg.c);
                     }
                 }) 
@@ -92,36 +111,40 @@
             $("#d1").attr("max",mi.toLocaleDateString("fr-CA"));
         }
         function addq(){
-            var da1=new Date($("#d1").val());
-            var da2=new Date($("#d2").val());
-            var di = parseInt((da2-da1)/1000/60/60/24);
-            $.post({
-                url:"fill user info.php",
-                data:{
-                    rid:$("#ss").val(),
-                    rm:$("#ron").text(),
-                    p:$("#p").text(),
-                    d1:$("#d1").val(),
-                    d2:$("#d2").val(),                   
-                    op:$("#op").val(),
-                    cc:$("#cc").val(),
-                    cc1:di,
-                    pay:$("#pay").val(),
-                    op:$("#op").val(),            
-                },
-                success:function(msg){
-                    location.href="fill user info.php";
-                }
-            })
+            if($("#ss").val() !="請選擇房型" && $("#d1").val()!="" && $("#d2").val() !="" && $("#cc").val()!=""){
+                var da1=new Date($("#d1").val());
+                var da2=new Date($("#d2").val());
+                var di = parseInt((da2-da1)/1000/60/60/24);
+                $.post({
+                    url:"res_filluserinfo.php",
+                    data:{
+                        rid:$("#ss").val(),
+                        rm:$("#ron").text(),
+                        p:$("#p").text(),
+                        d1:$("#d1").val(),
+                        d2:$("#d2").val(),                   
+                        op:$("#op").val(),
+                        cc:$("#cc").val(),
+                        cc1:di,
+                        pay:$("#pay").val(),
+                        op:$("#op").val(),            
+                    },
+                    success:function(msg){
+                        location.href="res_filluserinfo.php";
+                    }
+                })
+            }            
         }
     </script>
     </head>
 
 <body bgcolor="#80FFFF"> 
         <div id="t" style="background-color: #2828FF;display: block;height:70px;">
+            <img src='../aaa.ico' width="70px" height="70px">
             <span style="float:right;"><button class="btn btn-outline-light text-dark" onclick="location.href='../logout.php'">登出</button></span>
-            <ul id="t" style="font-size: 0;position: absolute;top:25px">
-                <li><a href="intro1.php">房型介紹</a></li>
+            <ul id="t" style="font-size: 0;position: absolute;top:25px;left:2%;">
+                <li><a href="intro_room.php" >房型介紹</a></li>
+                <li><a href="intro_fa.php">設施介紹</a></li>
                 <li><a href="res.php" style="color:#F6FF00">預約訂房</a></li>
                 <li><a href="pinfo.php">會員資料</a></li>
                 <li><a href="q.php">預約查詢</a></li>
@@ -131,7 +154,7 @@
         <div class="c" style="text-align:center; font-size: 25px;">
             <span>預約訂房</span>
         </div>
-        <div>
+        <div style="text-align:left;margin-left:400px;">
             <br>     
             <sapn>房型選擇</span><br>
             <select id="ss" onchange="se()" onclick="sev()">
@@ -143,31 +166,33 @@
                         echo "<option value=".$row['id'].">".$row['rname']." 剩餘房數 :".$row['c']." NT$ ".$row['p']."</option>";
                     }
                 ?>
-            </select><br><br>                
-            <sapn>入住日期</span>
-            <input id="d1" type="date" id="d1"  onchange="de()"><br><br>
-            <sapn>退房日期</span>
-            <input type="date" id="d2"  onchange="de1()"><br><br>
-            <sapn>房間數量</span>
-            <input type="number" min="0" id="cc"><br><br>      
+            </select><br><br>    
+
+            <sapn>入住日期*</span><br>
+            <input class="a" id="d1" type="date" id="d1"  onchange="de()" style="width:280px;"><br><br>
+            <sapn>退房日期*</span><br>
+            <input class="a" type="date" id="d2"  onchange="de1()" style="width:280px;"><br><br>
+            <sapn>房間數量*</span><br>
+            <input class="a" type="number" min="0" id="cc" style="width:50px;"><br><br>
+            <span>意見/需求</span><br>
+            <textarea type="text" id="op" style="width:300px;height:100px;"></textarea><br>
+            <span>付款方式</span><br>
+            <select id="pay">
+                <option value="線上刷卡">線上刷卡</option>
+                <option value="付現">付現</option>
+            </select><br>
         </div>
-        
-        <div style="float:right">
-            <span id="ron"></span><br>
+        <div style="position: absolute;right:500px;top:240px;width:500px;height:500px;">
+            <h4><span id="ron"></span><br></h4>
             <span id="im"></span><br>
-            <span id="de"></span><br>            
-            <span id="pp"></span><span id="p"></span><br>
-            <span id="c"></span><br>
+            <span id="de"></span><br><br>
+            <span id="c"></span> 
+            <h2><span id="pp"></span><span id="p"></span></h2>
+            
         </div>
-        <span>意見/需求</span><br>
-        <textarea type="text" id="op" style="width:300px;height:100px;"></textarea><br>
-        <span>付款方式</span><br>
-        <select id="pay">
-            <option value="線上刷卡">線上刷卡</option>
-            <option value="付現">付現</option>
-        </select><br>
+        <br><br>
         <div style="text-align:center;">
-                <button  id="add" class="btn btn-primary btn-lg" style="top:600px;left:480px;" onclick="addq()">確認訂單</button>
+                <button  id="add" class="btn btn-primary btn-lg" onclick="addq()">確認訂單</button>
         </div>
 
 </body>

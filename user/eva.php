@@ -1,11 +1,4 @@
-<?php
-    include '../conn.php';
-    if(isset($_POST['n1'])){
-        $eva=$_POST['eva'];
-        $q="INSERT INTO eva(`ev`) VALUES ('$eva')";
-        mysqli_query($db,$q);
-    }
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,21 +43,49 @@
         input.b{
                 height:50px;
                 width:270px;
-                background-color:#005AB5;
+                outline-color:#66B3FF;
                 font-weight:bold;  
                 border-radius: 10px;
-                color: #E0E0E0;
-                font-size:18px; 
-        }  
+                font-size:15px; 
+        }
+        textarea{
+            outline-color:#66B3FF;
+            font-weight:bold;
+        }
+        select{
+            font-weight:bold;
+            
+        }
+        select option{
+            font-weight:bold;
+        }
     </style>
 </head>
+<script>
+
+        function eva_add(){
+            $.ajax({
+                type:"post",
+                url:"eva_add.php",
+                data:{
+                    eva:$("#eva").val(),
+                    score:$("#score").val(),
+                },
+                success:function(msg){
+                    alert("送出成功");
+                }
+            });
+        }
+    </script>
 <body bgcolor="#80FFFF">         
         <div id="t" style="background-color: #2828FF;display: block;height:70px;">
+            <img src='../aaa.ico' width="70px" height="70px">
             <span style="float:right;"><button class="btn btn-outline-light text-dark" onclick="location.href='../logout.php'">登出</button></span>
-            <ul id="t" style="font-size: 0;position: absolute;top:25px">
-                <li><a href="intro1.php">房型介紹</a></li>
+            <ul id="t" style="font-size: 0;position: absolute;top:25px;left:2%;">
+                <li><a href="intro_room.php">房型介紹</a></li>
+                <li><a href="intro_fa.php">設施介紹</a></li>
                 <li><a href="res.php">預約訂房</a></li>
-                <li><a href="pinfo.php">會員資料</a></li>
+                <li><a href="pinfo.php" >會員資料</a></li>
                 <li><a href="q.php">預約查詢</a></li>
                 <li><a href="eva.php" style="color:#F6FF00">客戶評價</a></li>
             </ul>            
@@ -72,20 +93,23 @@
         <div class="c" style="text-align:center; font-size: 25px;">
             <span>客戶評價</span>
         </div>
+
+        <div style="text-align:center;">
+            <span>評分</span>
+            <select id="score">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
         <br><br>
         <div style="text-align:center;">
-            <form action="" method="post">
-                <textarea id="inp" type="text" name="eva" style="height:400px;width:600px;font-weight:bold;font-size:20px;"></textarea><br>
-                <span style="color: #8E8E8E;">
-                    <?php
-                        if(isset($_POST['n1'])) 
-                            echo "已送出";
-                    ?>
-                </span>
-                <br><br>
-                <input type="button" class="btn btn-info" style="width:200px;height:50px;" name="n1" value="送出">
-                
-            </form>
+            <textarea type="text" id="eva" style="height:400px;width:600px;font-weight:bold;font-size:20px;"></textarea><br>
+            <br><br>
+            <button class="btn btn-info" style="width:200px;height:50px;" onclick="eva_add()" >送出</button>     
         </div>
 
 </body>

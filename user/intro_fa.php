@@ -45,53 +45,49 @@
         }
     </style>
     </head>
+
 <body bgcolor="#80FFFF">  
-        <div id="t" style="background-color: #2828FF;display: block;height:70px;">
+<div id="t" style="background-color: #2828FF;display: block;height:70px;">
             <img src='../aaa.ico' width="70px" height="70px">
             <span style="float:right;"><button class="btn btn-outline-light text-dark" onclick="location.href='../logout.php'">登出</button></span>
             <ul id="t" style="font-size: 0;position: absolute;top:25px;left:2%;">
-                <li><a href="intro_room.php">房型介紹</a></li>
-                <li><a href="intro_fa.php">設施介紹</a></li>
+                <li><a href="intro_room.php" >房型介紹</a></li>
+                <li><a href="intro_fa.php" style="color:#F6FF00">設施介紹</a></li>
                 <li><a href="res.php">預約訂房</a></li>
-                <li><a href="pinfo.php" style="color:#F6FF00">會員資料</a></li>
+                <li><a href="pinfo.php">會員資料</a></li>
                 <li><a href="q.php">預約查詢</a></li>
                 <li><a href="eva.php">客戶評價</a></li>
             </ul>            
         </div>
     <div class="c" style="text-align:center; font-size: 25px;">
-        <span>個人資料維護</span>
+        <span>設施介紹</span>
     </div>
 <br>
-<div style="padding-left:30%;">
-    <div style="float:right;padding-right:40%;">
-        <span ><?php echo $row['name'];?></span>
-        <br><br><br>    
-        <span ><?php echo $row['email'];?></span>
-        <br><br><br>
-        <span><?php echo $row['sex'];?></span>
-        <br><br><br>
-        <span><?php echo $row['ph'];?></span>
-        <br><br><br>
-        <span><?php echo $row['iid'];?></span>
-        <br><br><br>
-        <span><?php echo $row['lo'];?></span>
-    </div>
-    <span>名稱</span>
-    <br><br><br>    
-    <span>電子郵件</span>
-    <br><br><br>
-    <span>性別</span>
-    <br><br><br>
-    <span>電話</span>
-    <br><br><br>
-    <span>身分證字號</span>
-    <br><br><br>
-    <span>聯絡地址</span>
-    </div>
-<br><br><br>
-<div style="text-align:center;">
-    <button class="btn btn-primary" style="font-weight:bold;" onclick="location.href='pinfo_edit.php'">修改個人資料</button>
+<div style="position: absolute;top:25%;left:22%;">
+    <img src="../img/restarant.jpg" width="500px" height="300px">
 </div>
+<div style="position: absolute;top:25%;right:18%;">
+    <span><h2>全天式餐廳</h2></span>
+    <span>全天式餐廳為您提供西式、日式、沖繩料理等多元料理。開放式的廚房，</span><br>
+    <span>感受現場忙碌而熱絡的氣氛，品嘗主廚嚴選烹調的多元精美料理。</span>
+</div>
+<div style="position: absolute;top:60%;right:22%;">
+    <img src="../img/gym.jpg" width="500px" height="300px">
+</div>
+<div style="position: absolute;top:60%;left:22%;">
+    <span><h2>健身房</h2></span>
+    <span>對於熱愛健⾝的⼈來說，旅遊、出差、鍛鍊也不能停！跑步機、飛輪、</span><br>
+    <span>重量訓練等１３種健⾝器材，讓您舒緩⾝⼼，調節旅途的疲累。</span>
+</div>
+<div style="position: absolute;top:95%;left:22%;">
+    <img src="../img/swim.jpg" width="500px" height="300px">
+</div>
+<div style="position: absolute;top:95%;right:16%;">
+    <span><h2>戶外游泳池</h2></span>
+    <span>在繁榮的國際通中，能享受寬敞的空間，絕對是⼀種奢侈！提供25 公尺的</span><br>
+    <span>⼾外泳池、兒童池、按摩池及泳池飲料吧。讓⼈能放鬆享受夏⽇的度假氣氛！</span>
+</div>
+
 
 </body>
 </html>
