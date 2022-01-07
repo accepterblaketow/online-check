@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="../lo.ico">
-        <script src="../jquery-3.6.0.min.js"></script>
+        <script src="jquery-3.6.0.min.js"></script>
         <script src="../jquery-ui-1.13.0/jquery-ui.js"></script>
         <link href="../jquery-ui-1.13.0/jquery-ui.css" rel="stylesheet">
         <title>DING 線上訂房系統</title>
